@@ -6,31 +6,33 @@
 package datos;
 
 import static datos.Conexion.*;
-import domain.Persona;
+import domain.Usuario;
 import java.sql.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-        
-public class PersonaDAO {
-    private static final String SQL_SELECT = "SELECT idPersona, Nombre, Apellido, Email, Telefono FROM prueba.persona";
-    private static final String SQL_INSERT = "INSERT INTO persona(nombre, apellido, email, telefono) VALUES(?,?,?,?)";
-    private static final String SQL_UPDATE = "UPDATE persona SET nombre = ?, apellido = ?, email = ?, telefono = ? WHERE idPersona";
-    private static final String SQL_DELETE = "DELETE FROM persona WHERE idPersona = ?";
+
+/**
+ *
+ * @author jorge
+ */
+public class UsuarioDAO {
+    private static final String SQL_SELECT = "SELECT idUsuario, usuario, password FROM prueba.usuario";
+    private static final String SQL_INSERT = "INSERT INTO usuario(usuario, password) VALUES(?,?)";
+    private static final String SQL_UPDATE = "UPDATE usuario SET usuario = ?, password = ? WHERE idUsuario = ?";
+    private static final String SQL_DELETE = "DELETE FROM usuario WHERE idUsuario = ?";
     //private static final String SQL_DELETE = "DELETE "
     
     
     // Método que retorna una lista de objetos, tipo Persona(persona.java)
-    public List<Persona> seleccionar()
+    public List<Usuario> seleccionar()
     {
         //Inicializar parámetros de conexión
         
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Persona persona = null;
+        Usuario usuarioEntero = null;
         
-        List<Persona> personas = new ArrayList<>(); 
+        List<Usuario> usuarios = new ArrayList<>(); 
         
         try
         {
@@ -41,14 +43,13 @@ public class PersonaDAO {
             while(rs.next())
             {
                 //Obtener los datos de la BD
-                int idPersona = rs.getInt("idPersona");
-                String nombre = rs.getString("Nombre");
-                String apellido = rs.getString("Apellido");
-                String email = rs.getString("Email");
-                String telefono = rs.getString("Telefono");
+                int idUsuario = rs.getInt("idUsuario");
+                String usuario = rs.getString("usuario");
+                String password = rs.getString("password");
+           
                         
-                persona = new Persona(idPersona, nombre, apellido, email, telefono);
-                personas.add(persona);
+                usuarioEntero = new Usuario(idUsuario, usuario, password);
+                usuarios.add(usuarioEntero);
             }
         }catch(SQLException ex)
         {
@@ -68,11 +69,11 @@ public class PersonaDAO {
             }
         }
         
-        return personas;
+        return usuarios;
     }
     
     
-    public int insertar(Persona persona){
+    public int insertar(Usuario usuario){
         
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -81,10 +82,9 @@ public class PersonaDAO {
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_INSERT); //Por los campos que se 
             //usan se trabaja con strings 
-            stmt.setString(1, persona.getNombre());  //?
-            stmt.setString(2, persona.getApellido()); //?
-            stmt.setString(3, persona.getEmail()); //? 
-            stmt.setString(4, persona.getTelefono()); //?
+            stmt.setString(1, usuario.getUsuario());  //?
+            stmt.setString(2, usuario.getPassword()); //?
+        
             
             //Ejecutar sentencia 
             
@@ -108,7 +108,7 @@ public class PersonaDAO {
     }
     
     
-    public int actualizar(Persona persona){
+    public int actualizar(Usuario usuario){
         
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -117,11 +117,11 @@ public class PersonaDAO {
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_UPDATE); //Por los campos que se 
             //usan se trabaja con strings 
-            stmt.setString(1, persona.getNombre());  //?
-            stmt.setString(2, persona.getApellido()); //?
-            stmt.setString(3, persona.getEmail()); //? 
-            stmt.setString(4, persona.getTelefono()); //?
-            stmt.setInt(5, persona.getIdPersona());
+         
+            stmt.setString(1, usuario.getUsuario()); //?
+            stmt.setString(2, usuario.getPassword()); //? 
+            stmt.setInt(3, usuario.getidUsuario());  //?
+            
             
             //Ejecutar sentencia 
             
@@ -144,7 +144,7 @@ public class PersonaDAO {
         return registros;
     }
     
-    public int eliminar(Persona persona){
+    public int eliminar(Usuario usuario){
         
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -153,7 +153,7 @@ public class PersonaDAO {
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_DELETE);
            
-            stmt.setInt(1, persona.getIdPersona());
+            stmt.setInt(1, usuario.getidUsuario());
             
             //Ejecutar sentencia 
             
@@ -176,35 +176,5 @@ public class PersonaDAO {
         return registros;
     }
     
-    
-   public void deletePersona(int id)
-    {
-        Connection conn = null;
 
-        try
-        {
-            //String SQL_DELETE = "DELETE prueba.persona FROM prueba.persona WHERE idPersona = " + id;
-            String SQL_DELETE = "DELETE FROM prueba.persona WHERE idPersona = " + id;
-            conn = getConnection();
-            
-            Statement estate = conn.createStatement();
-            estate.executeUpdate(SQL_DELETE);
-       
-        }catch(SQLException ex)
-        {
-            ex.printStackTrace(System.out);
-        }
-        // Cerrar todos los objetos
-        finally
-        {
-            try
-            {
-                
-                Conexion.close(conn);
-            }catch(SQLException ex){
-                ex.printStackTrace(System.out);
-            }
-        }
-
-    }
 }

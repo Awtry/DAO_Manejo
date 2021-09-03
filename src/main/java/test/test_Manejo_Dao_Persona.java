@@ -16,6 +16,36 @@ public class test_Manejo_Dao_Persona {
         
         PersonaDAO personaDao = new PersonaDAO();
         
+        //Persona personaAgregar = new Persona("Zongli", "Morax", "lyue", "45545454");
+        //personaDao.insertar(personaAgregar);
+        
+         /*List<Persona> personas = personaDao.seleccionar();
+                        personas.forEach(persona ->
+                        {
+                             System.out.println(persona);
+                         });
+        */
+        
+         /*Persona personaEditar = new Persona(11,"Coqueta","Woadd","coqueta@correo.com","787878787");
+         personaDao.actualizar(personaEditar);
+         
+          List<Persona> personas = personaDao.seleccionar();
+                        personas.forEach(persona ->
+                        {
+                             System.out.println(persona);
+                         });
+         */
+         
+         /*
+         Persona personaELiminar = new Persona(10);
+         personaDao.eliminar(personaELiminar);
+         List<Persona> personas = personaDao.seleccionar();
+                        personas.forEach(persona ->
+                        {
+                             System.out.println(persona);
+                         });
+         */
+         
         
         int usuario = 0;
         int centi = 0;

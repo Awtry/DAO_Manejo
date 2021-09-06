@@ -15,15 +15,29 @@ import java.util.*;
  * @author jorge
  */
 public class UsuarioDAO {
+    
+     //Menejo de conexión = recibe un obj Connection fuera de la clase
+    private Connection conexionTransaccional;
+    
+    
     private static final String SQL_SELECT = "SELECT idUsuario, usuario, password FROM prueba.usuario";
     private static final String SQL_INSERT = "INSERT INTO usuario(usuario, password) VALUES(?,?)";
     private static final String SQL_UPDATE = "UPDATE usuario SET usuario = ?, password = ? WHERE idUsuario = ?";
     private static final String SQL_DELETE = "DELETE FROM usuario WHERE idUsuario = ?";
     //private static final String SQL_DELETE = "DELETE "
     
+        // Pare recibir la conexión 
+    public UsuarioDAO(){
+    
+    }
+    
+    public UsuarioDAO(Connection conexionTransaccional){
+        this.conexionTransaccional = conexionTransaccional;
+    }
+    
     
     // Método que retorna una lista de objetos, tipo Persona(persona.java)
-    public List<Usuario> seleccionar()
+    public List<Usuario> seleccionar() throws SQLException
     {
         //Inicializar parámetros de conexión
         
@@ -36,7 +50,8 @@ public class UsuarioDAO {
         
         try
         {
-            conn = getConnection();
+            //conn = getConnection();
+            conn = this.conexionTransaccional != null ? this.conexionTransaccional: getConnection();
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             
@@ -51,11 +66,12 @@ public class UsuarioDAO {
                 usuarioEntero = new Usuario(idUsuario, usuario, password);
                 usuarios.add(usuarioEntero);
             }
-        }catch(SQLException ex)
-        {
-            ex.printStackTrace(System.out);
-            //Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+//        catch(SQLException ex)
+//        {
+//            ex.printStackTrace(System.out);
+//            //Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         // Cerrar todos los objetos
         finally
         {
@@ -63,7 +79,10 @@ public class UsuarioDAO {
             {
                 Conexion.close(rs);
                 Conexion.close(stmt);
-                Conexion.close(conn);
+                //Conexion.close(conn);
+                if(this.conexionTransaccional == null){
+                    Conexion.close(conn);
+                }
             }catch(SQLException ex){
                 ex.printStackTrace(System.out);
             }
@@ -73,13 +92,14 @@ public class UsuarioDAO {
     }
     
     
-    public int insertar(Usuario usuario){
+    public int insertar(Usuario usuario) throws SQLException{
         
         Connection conn = null;
         PreparedStatement stmt = null;
         int registros = 0; // Saber cuantos registros se han actualizado
         try {
-            conn = getConnection();
+            //conn = getConnection();
+            conn = this.conexionTransaccional != null ? this.conexionTransaccional: getConnection();
             stmt = conn.prepareStatement(SQL_INSERT); //Por los campos que se 
             //usan se trabaja con strings 
             stmt.setString(1, usuario.getUsuario());  //?
@@ -91,13 +111,17 @@ public class UsuarioDAO {
             registros = stmt.executeUpdate(); // Modifica el estado de la 
             //base de datos INSERT/UPDATE/DELETE
             
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.out);
-        }
+        } 
+//        catch (SQLException ex) {
+//            ex.printStackTrace(System.out);
+//        }
         finally{
             try {
                 close(stmt);
-                close(conn);
+                //close(conn);
+                if(this.conexionTransaccional == null){
+                    Conexion.close(conn);
+                }
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
@@ -108,13 +132,14 @@ public class UsuarioDAO {
     }
     
     
-    public int actualizar(Usuario usuario){
+    public int actualizar(Usuario usuario) throws SQLException{
         
         Connection conn = null;
         PreparedStatement stmt = null;
         int registros = 0; // Saber cuantos registros se han actualizado
         try {
-            conn = getConnection();
+            //conn = getConnection();
+             conn = this.conexionTransaccional != null ? this.conexionTransaccional: getConnection();
             stmt = conn.prepareStatement(SQL_UPDATE); //Por los campos que se 
             //usan se trabaja con strings 
          
@@ -128,13 +153,17 @@ public class UsuarioDAO {
             registros = stmt.executeUpdate(); // Modifica el estado de la 
             //base de datos INSERT/UPDATE/DELETE
             
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.out);
-        }
+        } 
+//        catch (SQLException ex) {
+//            ex.printStackTrace(System.out);
+//        }
         finally{
             try {
                 close(stmt);
-                close(conn);
+                //close(conn);
+                 if(this.conexionTransaccional == null){
+                    Conexion.close(conn);
+                }
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
@@ -144,13 +173,14 @@ public class UsuarioDAO {
         return registros;
     }
     
-    public int eliminar(Usuario usuario){
+    public int eliminar(Usuario usuario) throws SQLException{
         
         Connection conn = null;
         PreparedStatement stmt = null;
         int registros = 0; // Saber cuantos registros se han actualizado
         try {
-            conn = getConnection();
+            //conn = getConnection();
+             conn = this.conexionTransaccional != null ? this.conexionTransaccional: getConnection();
             stmt = conn.prepareStatement(SQL_DELETE);
            
             stmt.setInt(1, usuario.getidUsuario());
@@ -160,13 +190,17 @@ public class UsuarioDAO {
             registros = stmt.executeUpdate(); // Modifica el estado de la 
             //base de datos INSERT/UPDATE/DELETE
             
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.out);
-        }
+        } 
+//        catch (SQLException ex) {
+//            ex.printStackTrace(System.out);
+//        }
         finally{
             try {
                 close(stmt);
-                close(conn);
+                //close(conn);
+                  if(this.conexionTransaccional == null){
+                    Conexion.close(conn);
+                }
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }

@@ -210,7 +210,7 @@ public class PersonaDAO {
         return registros;
     }
     
-    
+ 
    public void deletePersona(int id) throws SQLException
     {
         Connection conn = null;

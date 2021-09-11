@@ -323,7 +323,7 @@ public class Usuario_VISTA extends javax.swing.JFrame {
 
         Usuario insertarUsuario = new Usuario();
         
-        insertarUsuario.setUsuario(txtContra_Usuario.getText());
+        insertarUsuario.setUsuario(txtNombre_Usuaio.getText());
         insertarUsuario.setPassword(txtContra_Usuario.getText());
 
         {

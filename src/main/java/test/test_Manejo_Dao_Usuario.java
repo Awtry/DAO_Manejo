@@ -14,7 +14,7 @@ public class test_Manejo_Dao_Usuario {
     public static void main(String[] args) {
         
          Scanner lee = new Scanner(System.in);
-        
+        /*
         UsuarioDAO usuarioDao = new UsuarioDAO();
         
         int entrada = 0;
@@ -101,7 +101,7 @@ public class test_Manejo_Dao_Usuario {
             System.out.println("¿Quieres regresar al menu? 1- Si / 0 - NO");
             centi = lee.nextInt();
             
-        }while(centi != 0);
+        }while(centi != 0);*/
     }
     
 }

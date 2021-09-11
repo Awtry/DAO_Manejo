@@ -1,1 +1,10 @@
+domain\Persona.class
+test\test_Manejo_Dao_Persona.class
+test\Prueba_externa_conexion.class
+datos\UsuarioDAO.class
+domain\Usuario.class
+datos\Conexion.class
+datos\PersonaDAO.class
+test\test_Manejo_Dao_Usuario.class
 test\test.class
+test\conexionPruebaUsuaro_DAO.class

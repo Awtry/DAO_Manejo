@@ -46,7 +46,7 @@ public class test_Manejo_Dao_Persona {
                          });
          */
          
-        
+    /*    
         int usuario = 0;
         int centi = 0;
         int res = 0;
@@ -82,10 +82,10 @@ public class test_Manejo_Dao_Persona {
                     System.out.println("Trabajando en ello");
                     System.out.println("Dame el número del que se elimina.");
                     usuario = lee.nextInt();
-                    personaDao.deletePersona(usuario);
+                   // personaDao.deletePersona(usuario);
                     
-                    List<Persona> restantes = personaDao.seleccionar();
-                    restantes.forEach(persona ->
+                  //  List<Persona> restantes = personaDao.seleccionar();
+                   // restantes.forEach(persona ->
                         {
                              System.out.println(persona);
                          });
@@ -99,5 +99,7 @@ public class test_Manejo_Dao_Persona {
             centi = lee.nextInt();
             
         }while(centi != 0);
+
+*/
     }
 }
